@@ -1,6 +1,6 @@
 import jsonschema
 
-def generate_schema(json_doc: dict, schema_url:str=None, required_cols:str or list=None, nullable_cols:str or list=None) -> dict:
+def generate_schema(json_doc: dict, required_cols=None, nullable_cols=None, version=None) -> dict:
     if required_cols is None:
         required_cols = list(json_doc.keys())
 
@@ -8,7 +8,7 @@ def generate_schema(json_doc: dict, schema_url:str=None, required_cols:str or li
         nullable_cols = []
 
     schema = {
-        # "$schema": "http://json-schema.org/draft-07/schema#",
+        "version": version,
         "type": "object",
         "properties": {},
         "required": []
@@ -43,8 +43,6 @@ def generate_schema(json_doc: dict, schema_url:str=None, required_cols:str or li
                 schema["required"].append(key)
 
     return schema
-
-
 
 
 def check_json(json_doc, schema):
